@@ -14,13 +14,69 @@ class Grid:
             i_2 = [random.randint(0, 3), random.randint(0, 3)]
 
         self.board[i_1[0]][i_1[1]], self.board[i_2[0]][i_2[1]] = 2, 2
-        self.display()
+        self.lost = False
+        self.win = False
+        self.display("")
+
+    def have_win(self):
+        if self.score >= 600:
+            self.win = True
+
+    def have_lost(self):
+        for i in range(3):
+            for j in range(3):
+                if (
+                    self.board[i][j] == self.board[i + 1][j]
+                    or self.board[i][j] == self.board[i][j + 1]
+                ):
+                    pass
+
+        for j in range(3):
+            if self.board[3][j] == self.board[3][j + 1]:
+                pass
+
+        for i in range(3):
+            if self.board[i][3] == self.board[i + 1][3]:
+                pass
+
+        self.lost = True
 
     def new_values(self):
-        ij = [random.randint(0, 3), random.randint(0, 3)]
-        while self.board[ij[0]][ij[1]] != 0:
-            ij = [random.randint(0, 3), random.randint(0, 3)]
-        self.board[ij[0]][ij[1]] = random.choices([2, 4], [0.9, 0.1])[0]
+        i, j = random.randint(0, 3), random.randint(0, 3)
+
+        while self.board[i][j] != 0:
+            i, j = random.randint(0, 3), random.randint(0, 3)
+
+        new_val = random.choices([2, 4], [0.9, 0.1])[0]
+        self.board[i][j] = new_val
+
+    def move(self, move):
+        if move == "UP":
+            self.up()
+        elif move == "DOWN":
+            self.down()
+        elif move == "LEFT":
+            self.left()
+        elif move == "RIGHT":
+            self.right()
+
+        self.have_win()
+
+        if self.win:
+            self.display(move)
+            return
+
+        for i in range(4):
+            for j in range(4):
+                if self.board[i][j] == 0:
+                    self.new_values()
+                    self.display(move)
+                    self.state += 1
+                    return
+
+        self.display(move)
+        self.state += 1
+        self.have_lost()
 
     def left(self):
         arr1 = self.board.copy()
@@ -28,9 +84,6 @@ class Grid:
         arr2 = compress(arr1)
         arr3, self.score = merge(arr2, self.score)
         self.board = compress(arr3)
-
-        self.new_values()
-        self.display()
 
     def right(self):
         arr1 = self.board.copy()
@@ -41,9 +94,6 @@ class Grid:
         arr5 = compress(arr4)
         self.board = reverse(arr5)
 
-        self.new_values()
-        self.display()
-
     def up(self):
         arr1 = self.board.copy()
 
@@ -52,9 +102,6 @@ class Grid:
         arr4, self.score = merge(arr3, self.score)
         arr5 = compress(arr4)
         self.board = transp(arr5)
-
-        self.new_values()
-        self.display()
 
     def down(self):
         arr1 = self.board.copy()
@@ -67,12 +114,18 @@ class Grid:
         arr7 = reverse(arr6)
         self.board = transp(arr7)
 
-        self.new_values()
-        self.display()
-
-    def display(self):
+    def display(self, move):
         print("-----------------------------------------")
-        print("State: " + str(self.state) + "       " + "Score: " + str(self.score))
+        print(
+            "State: "
+            + str(self.state)
+            + "       "
+            + "Score: "
+            + str(self.score)
+            + "      "
+            + "Move that was done: "
+            + move
+        )
         print("")
         for row in self.board:
             print(
@@ -81,15 +134,10 @@ class Grid:
                 )
             )
 
-        self.state += 1
-
 
 g = Grid()
-g.down()
 
-i = g.board.size
+while not (g.lost or g.win):
+    g.move(random.choice(["UP", "DOWN", "LEFT", "RIGHT"]))
 
-
-
-
-print(g.board[0][0])
+print("YOU LOSE" if g.lost else "YOU WIN")

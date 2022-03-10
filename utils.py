@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def compress(mat):
     new_mat = np.zeros((4, 4), dtype=int)
     for i in range(4):

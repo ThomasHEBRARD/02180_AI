@@ -29,7 +29,7 @@ class ElJuego:
             self.lost = True
 
     def mcts(self):
-        max_depth = 1
+        max_depth = 10
         available_moves = self.board.get_available_moves()
 
         move_score = {move: 0 for move in self.board.moves}
@@ -40,6 +40,7 @@ class ElJuego:
             possible_grid = copy.copy(self.board)
             possible_game = ElJuego(possible_grid)
             depth = 0
+            
             while True:
                 if possible_game.won or possible_game.lost or depth > max_depth:
                     move_score[possible_move] += possible_game.score

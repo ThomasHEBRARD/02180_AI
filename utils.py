@@ -12,14 +12,15 @@ def compress(mat):
     return new_mat
 
 
-def merge(mat, new_score):
+def merge(mat):
+    score_to_add = 0
     for i in range(4):
         for j in range(3):
             if mat[i][j] == mat[i][j + 1] and mat[i][j] != 0:
                 mat[i][j] += mat[i][j]
-                new_score += mat[i][j]
+                score_to_add = mat[i][j]
                 mat[i][j + 1] = 0
-    return (np.array(mat), new_score)
+    return (np.array(mat), score_to_add)
 
 
 def reverse(mat):

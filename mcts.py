@@ -1,3 +1,4 @@
+import random
 import numpy as np
 
 def mcts(grid):
@@ -9,7 +10,7 @@ def mcts(grid):
     for i in range(1000):
         possible_move = random.choice(available_moves)
 
-        possbiel_grid = grid.copy()
+        possbiel_grid = grid.grid.copy()
 
 
 

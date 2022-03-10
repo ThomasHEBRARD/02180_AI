@@ -8,10 +8,12 @@ from utils import compress, merge, reverse, transp
 class ElJuego:
     def __init__(self, grid):
         self.score = 0
-        self.board = grid
+        self.grid = grid
         self.goal = 60000
 
         self.won, self.lost = False, False
+
+        self.display("Initial board")
 
     def check_win(self):
         """
@@ -29,25 +31,39 @@ class ElJuego:
 
     def play(self):
         while not (self.lost or self.won):
-            move = mcts(self.board)
-            score_to_add = self.board.move(move)
+            move = mcts(self.grid)
+            score_to_add = self.grid.move(move)
 
             self.check_win()
 
             if self.won:
-                self.board.display(move)
+                self.dislay(move)
                 break
 
             # Check if there are empty cells
             for i in range(4):
                 for j in range(4):
-                    if self.board[i][j] == 0:
-                        self.board.new_values()
+                    if self.grid.grid[i][j] == 0:
+                        self.grid.new_values()
 
-            self.board.dislay(move)
+            self.display(move)
             self.score += score_to_add
 
         print("done")
+
+    def display(self, move):
+        """
+        This is the ui: dislays the board and some info in the terminal
+        """
+        print("-----------------------------------------")
+        print("Move that was done: " + move)
+        print("")
+        for row in self.grid.grid:
+            print(
+                "{:<10s} {:<10s} {:<10s} {:<10s}".format(
+                    *[str(r) if r != 0 else "." for r in row]
+                )
+            )
 
 
 class Grid:
@@ -61,8 +77,6 @@ class Grid:
             i_2 = [random.randint(0, 3), random.randint(0, 3)]
 
         self.grid[i_1[0]][i_1[1]], self.grid[i_2[0]][i_2[1]] = 2, 2
-
-        self.display("Initial board")
 
     def get_available_moves(self):
         """
@@ -242,19 +256,6 @@ class Grid:
 
         return score_to_add
 
-    def display(self, move):
-        """
-        This is the ui: dislays the board and some info in the terminal
-        """
-        print("-----------------------------------------")
-        print("Move that was done: " + move)
-        print("")
-        for row in self.grid:
-            print(
-                "{:<10s} {:<10s} {:<10s} {:<10s}".format(
-                    *[str(r) if r != 0 else "." for r in row]
-                )
-            )
 
 grid = Grid()
 juedo = ElJuego(grid)

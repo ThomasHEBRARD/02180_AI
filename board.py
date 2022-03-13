@@ -213,6 +213,7 @@ class Board:
 
     def find_next_move(self):
         if s:=self.board_id() in MEMO:
+            print(s)
             return MEMO[s]
 
         max_depth = 10
@@ -222,7 +223,6 @@ class Board:
         move_count = {move: 0 for move in self.moves}
 
         for _ in range(1000):
-            # print(move_score, move_count)
             possible_move = random.choice(available_moves)
             possible_grid = copy.copy(self)
             possible_game = ElJuego(possible_grid)

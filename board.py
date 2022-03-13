@@ -191,7 +191,8 @@ class Board:
         max_depth = 10
         available_moves = self.get_available_moves()
 
-        move_score = move_count = {move: 0 for move in self.moves}
+        move_score = {move: 0 for move in self.moves}
+        move_count = {move: 0 for move in self.moves}
 
         for _ in range(1000):
             possible_move = random.choice(available_moves)

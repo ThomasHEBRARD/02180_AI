@@ -44,8 +44,6 @@ class Board:
         Test if a given move is possible
         move can be "UP" or "DOWN" or "LEFT" or "RIGHT"
         """
-        # des corrections faites pour interdire un mouvement si il n'y a que des zéros dans une colonne
-        # possible de combiner up et down et left et right. A moins que j'ai pas capté un truc c'est deux fois le même algo
         if move == "UP":
             for col in self.get_all_columns():
                 one_tile = False
@@ -251,3 +249,7 @@ class Board:
         MEMO[self.board_id(self.grid)] = chosen_move
         return chosen_move
 
+    def board_id(self):
+        list_numbers = np.concatenate((self.grid[0],self.grid[1],self.grid[2],self.grid[3]))
+        idx = "_".join(list_numbers.astype(str))
+        return idx

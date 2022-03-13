@@ -241,3 +241,8 @@ class Board:
         result = {move: move_score[move] / move_count[move] for move in self.moves}
         chosen_move = max(result, key=result.get)
         return chosen_move
+
+    def board_id(self):
+        list_numbers = np.concatenate((self.grid[0],self.grid[1],self.grid[2],self.grid[3]))
+        idx = "_".join(list_numbers.astype(str))
+        return idx

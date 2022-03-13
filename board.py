@@ -38,6 +38,13 @@ class Board:
                     return True
         return False
 
+    def winning_tile(self):
+        for i in range(4):
+            for j in range (4):
+                if self.grid[i][j]==2048 :
+                    return True
+        return False
+
     def move_validity(self, move):
         """
         Test if a given move is possible

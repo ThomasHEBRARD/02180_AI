@@ -43,11 +43,18 @@ class Board:
         Test if a given move is possible
         move can be "UP" or "DOWN" or "LEFT" or "RIGHT"
         """
-
+        # des corrections faites pour interdire un mouvement si il n'y a que des zéros dans une colonne
+        # possible de combiner up et down et left et right. A moins que j'ai pas capté un truc c'est deux fois le même algo
         if move == "UP":
             for col in self.get_all_columns():
+                one_tile = False
+                empty_tile = False
                 for i in range(4):
                     if col[i] == 0:
+                        empty_tile = True
+                    else :
+                        one_tile = True
+                    if empty_tile and one_tile :
                         return True
                     if i < 3 and col[i] != 0 and col[i] == col[i + 1]:
                         return True
@@ -55,8 +62,14 @@ class Board:
 
         if move == "DOWN":
             for col in self.get_all_columns():
+                one_tile = False
+                empty_tile = False
                 for i in range(4):
-                    if col[3] == 0:
+                    if col[i] == 0:
+                        empty_tile = True
+                    else :
+                        one_tile = True
+                    if empty_tile and one_tile :
                         return True
                     if i < 3 and col[i] != 0 and col[i] == col[i + 1]:
                         return True
@@ -64,8 +77,14 @@ class Board:
 
         if move == "LEFT":
             for row in self.get_all_rows():
+                one_tile = False
+                empty_tile = False
                 for i in range(4):
-                    if row[0] == 0:
+                    if row[i] == 0:
+                        empty_tile = True
+                    else :
+                        one_tile = True
+                    if empty_tile and one_tile :
                         return True
                     if i < 3 and row[i] != 0 and row[i] == row[i + 1]:
                         return True
@@ -73,13 +92,18 @@ class Board:
 
         if move == "RIGHT":
             for row in self.get_all_rows():
+                one_tile = False
+                empty_tile = False
                 for i in range(4):
-                    if row[3] == 0:
+                    if row[i] == 0:
+                        empty_tile = True
+                    else :
+                        one_tile = True
+                    if empty_tile and one_tile :
                         return True
                     if i < 3 and row[i] != 0 and row[i] == row[i + 1]:
                         return True
             return False
-
     def get_all_rows(self):
         """
         Return all columns (left to right)

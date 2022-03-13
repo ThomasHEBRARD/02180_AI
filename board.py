@@ -5,6 +5,7 @@ import numpy as np
 from utils import compress, reverse, transp, merge
 from game import ElJuego
 
+MEMO = {}
 
 class Board:
     def __init__(self):
@@ -52,9 +53,9 @@ class Board:
                 for i in range(4):
                     if col[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
                     if i < 3 and col[i] != 0 and col[i] == col[i + 1]:
                         return True
@@ -67,9 +68,9 @@ class Board:
                 for i in range(4):
                     if col[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
                     if i < 3 and col[i] != 0 and col[i] == col[i + 1]:
                         return True
@@ -82,9 +83,9 @@ class Board:
                 for i in range(4):
                     if row[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
                     if i < 3 and row[i] != 0 and row[i] == row[i + 1]:
                         return True
@@ -97,13 +98,14 @@ class Board:
                 for i in range(4):
                     if row[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
                     if i < 3 and row[i] != 0 and row[i] == row[i + 1]:
                         return True
             return False
+
     def get_all_rows(self):
         """
         Return all columns (left to right)
@@ -212,6 +214,9 @@ class Board:
         return score_to_add
 
     def find_next_move(self):
+        if self.board_id(self.grid) in MEMO:
+            return MEMO[self.board_id(self.grid)]
+
         max_depth = 10
         available_moves = self.get_available_moves()
 
@@ -219,6 +224,7 @@ class Board:
         move_count = {move: 0 for move in self.moves}
 
         for _ in range(1000):
+            # print(move_score, move_count)
             possible_move = random.choice(available_moves)
             possible_grid = copy.copy(self)
             possible_game = ElJuego(possible_grid)
@@ -242,4 +248,6 @@ class Board:
         move_count = {k: v if v != 0 else 1 for k, v in move_count.items()}
         result = {move: move_score[move] / move_count[move] for move in self.moves}
         chosen_move = max(result, key=result.get)
+        MEMO[self.board_id(self.grid)] = chosen_move
         return chosen_move
+

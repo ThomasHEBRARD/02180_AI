@@ -52,7 +52,7 @@ class ElJuego:
         This is the ui: dislays the board and some info in the terminal
         """
         print("-----------------------------------------")
-        print("Score: " + self.score + "   " + "Move that was done: " + move)
+        print("Score: " + str(self.score) + "   " + "Move that was done: " + move)
         print("")
 
         for row in self.board.grid:

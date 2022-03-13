@@ -1,7 +1,9 @@
+import copy
 import random
 import numpy as np
 
 from utils import compress, reverse, transp, merge
+from game import ElJuego
 
 
 class Board:
@@ -184,3 +186,35 @@ class Board:
         self.grid = transp(arr7)
 
         return score_to_add
+
+    def find_next_move(self):
+        max_depth = 10
+        available_moves = self.get_available_moves()
+
+        move_score = move_count = {move: 0 for move in self.moves}
+
+        for _ in range(1000):
+            possible_move = random.choice(available_moves)
+            possible_grid = copy.copy(self)
+            possible_game = ElJuego(possible_grid)
+            depth = 0
+
+            while True:
+                if possible_game.won or possible_game.lost or depth > max_depth:
+                    move_score[possible_move] += possible_game.score
+                    move_count[possible_move] += 1
+                    break
+
+                if depth == 0:
+                    next_move = possible_move
+                else:
+                    available_moves = possible_grid.get_available_moves()
+                    next_move = random.choice(available_moves)
+
+                possible_game.score += possible_grid.move(next_move)
+                depth += 1
+
+        move_count = {k: v if v != 0 else 1 for k, v in move_count.items()}
+        result = {move: move_score[move] / move_count[move] for move in self.moves}
+        chosen_move = max(result, key=result.get)
+        return chosen_move

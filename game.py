@@ -42,7 +42,7 @@ class ElJuego:
                 self.display(next_move)
                 break
 
-            # self.display(next_move)
+            self.display(next_move)
             self.score += score_to_add
             print("Move: " + next_move + ",    Score: " + str(self.score))
 

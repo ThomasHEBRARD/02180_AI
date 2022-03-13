@@ -212,8 +212,8 @@ class Board:
         return score_to_add
 
     def find_next_move(self):
-        if self.board_id(self.grid) in MEMO:
-            return MEMO[self.board_id(self.grid)]
+        if s:=self.board_id() in MEMO:
+            return MEMO[s]
 
         max_depth = 10
         available_moves = self.get_available_moves()
@@ -246,7 +246,7 @@ class Board:
         move_count = {k: v if v != 0 else 1 for k, v in move_count.items()}
         result = {move: move_score[move] / move_count[move] for move in self.moves}
         chosen_move = max(result, key=result.get)
-        MEMO[self.board_id(self.grid)] = chosen_move
+        MEMO[self.board_id()] = chosen_move
         return chosen_move
 
     def board_id(self):

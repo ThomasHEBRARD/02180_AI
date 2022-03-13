@@ -43,8 +43,6 @@ class Board:
         Test if a given move is possible
         move can be "UP" or "DOWN" or "LEFT" or "RIGHT"
         """
-        # des corrections faites pour interdire un mouvement si il n'y a que des zéros dans une colonne
-        # possible de combiner up et down et left et right. A moins que j'ai pas capté un truc c'est deux fois le même algo
         if move == "UP":
             for col in self.get_all_columns():
                 one_tile = False

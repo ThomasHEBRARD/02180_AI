@@ -50,11 +50,11 @@ class Board:
                 for i in range(4):
                     if col[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
-                    if i < 3 and col[i] != 0 and col[i] == col[i + 1]:
+                    if i < 3 and col[i] == col[i + 1] and col[i] != 0:
                         return True
             return False
 
@@ -65,9 +65,9 @@ class Board:
                 for i in range(4):
                     if col[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
                     if i < 3 and col[i] != 0 and col[i] == col[i + 1]:
                         return True
@@ -80,9 +80,9 @@ class Board:
                 for i in range(4):
                     if row[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
                     if i < 3 and row[i] != 0 and row[i] == row[i + 1]:
                         return True
@@ -95,13 +95,14 @@ class Board:
                 for i in range(4):
                     if row[i] == 0:
                         empty_tile = True
-                    else :
+                    else:
                         one_tile = True
-                    if empty_tile and one_tile :
+                    if empty_tile and one_tile:
                         return True
                     if i < 3 and row[i] != 0 and row[i] == row[i + 1]:
                         return True
             return False
+
     def get_all_rows(self):
         """
         Return all columns (left to right)
@@ -231,10 +232,10 @@ class Board:
                 if depth == 0:
                     next_move = possible_move
                 else:
-                    available_moves = possible_grid.get_available_moves()
+                    available_moves = possible_game.board.get_available_moves()
                     next_move = random.choice(available_moves)
 
-                possible_game.score += possible_grid.move(next_move)
+                possible_game.score += possible_game.board.move(next_move)
                 depth += 1
 
         move_count = {k: v if v != 0 else 1 for k, v in move_count.items()}

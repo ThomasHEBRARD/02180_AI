@@ -249,10 +249,14 @@ class Board:
                 depth += 1
 
         move_count = {k: v if v != 0 else 1 for k, v in move_count.items()}
-        result = {move: move_score[move] / move_count[move] + np.sqrt(2*np.log(self.last_count)/move_count[move]) for move in self.moves}
+        # Use UCB
+        # result = {move: move_score[move] / move_count[move] + np.sqrt(2*np.log(self.last_count)/move_count[move]) for move in self.moves}
+        # Use mean
+        result = {move: move_score[move] / move_count[move] for move in self.moves}
+
         chosen_move = max(result, key=result.get)
         self.last_count = move_count[chosen_move]
-        print(self.last_count)
+        
 
         return chosen_move
 

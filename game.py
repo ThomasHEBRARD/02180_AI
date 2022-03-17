@@ -11,7 +11,7 @@ class ElJuego:
         Changes the win variable to True if the player won
         """
         if self.score >= self.goal:
-            if self.winning_tile():
+            if self.board.winning_tile():
                 return True
 
     def check_lost(self):

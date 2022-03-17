@@ -27,6 +27,13 @@ class Board:
 
         return [move for move in self.moves if self.move_validity(move)]
 
+    def winning_tile(self):
+        for i in range(4):
+            for j in range (4):
+                if self.grid[i][j]==2048 :
+                    return True
+        return False
+
     def empty_cell(self):
         """
         Return True if the grid contains at least one empty cell, else return False

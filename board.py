@@ -29,13 +29,6 @@ class Board:
 
         return [move for move in self.moves if self.move_validity(move)]
 
-    def winning_tile(self):
-        for i in range(4):
-            for j in range (4):
-                if self.grid[i][j]==2048 :
-                    return True
-        return False
-
     def empty_cell(self):
         """
         Return True if the grid contains at least one empty cell, else return False
@@ -49,8 +42,8 @@ class Board:
 
     def winning_tile(self):
         for i in range(4):
-            for j in range (4):
-                if self.grid[i][j]==2048 :
+            for j in range(4):
+                if self.grid[i][j] == 2048:
                     return True
         return False
 
@@ -232,7 +225,6 @@ class Board:
 
         move_score = {move: 0 for move in self.moves}
         move_count = {move: 0 for move in self.moves}
-        
 
         for _ in range(1000):
             possible_move = random.choice(available_moves)
@@ -261,13 +253,13 @@ class Board:
         # Use mean
         result = {move: move_score[move] / move_count[move] for move in self.moves}
         chosen_move = max(result, key=result.get)
-        print({move : [move_score[move] / move_count[move],move_count[move]] for move in self.moves})
         self.last_count = move_count[chosen_move]
-        
 
         return chosen_move
 
     def board_id(self):
-        list_numbers = np.concatenate((self.grid[0],self.grid[1],self.grid[2],self.grid[3]))
+        list_numbers = np.concatenate(
+            (self.grid[0], self.grid[1], self.grid[2], self.grid[3])
+        )
         idx = "_".join(list_numbers.astype(str))
         return idx

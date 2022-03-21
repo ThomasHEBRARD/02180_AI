@@ -1,7 +1,7 @@
 class ElJuego:
     def __init__(self, board):
         self.score = 0
-        self.goal = 1000
+        self.goal = 10000
         self.won, self.lost = False, False
 
         self.board = board

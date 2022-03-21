@@ -43,7 +43,7 @@ class Board:
     def winning_tile(self):
         for i in range(4):
             for j in range (4):
-                if self.grid[i][j]==2048 :
+                if self.grid[i][j]==512 :
                     return True
         return False
 
@@ -253,8 +253,8 @@ class Board:
         # result = {move: move_score[move] / move_count[move] + np.sqrt(2*np.log(self.last_count)/move_count[move]) for move in self.moves}
         # Use mean
         result = {move: move_score[move] / move_count[move] for move in self.moves}
-
         chosen_move = max(result, key=result.get)
+        print({move : [move_score[move] / move_count[move],move_count[move]] for move in self.moves})
         self.last_count = move_count[chosen_move]
         
 

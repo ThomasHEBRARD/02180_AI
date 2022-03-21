@@ -5,4 +5,6 @@ The purpose of this algorithm is to create an AI algorithm based on Monte Carlo 
 The AI part is the function "find_next_move" in the call Board in the file board.py. The rest of the code is just the game implementation.
 
 
-To run the code, go to the main directory and write in your terminal "python main.py".
+To run the code, go to the main directory and write in your terminal:
+#1: "pip install -r requirements.txt" (to install dependencies)
+#2: "python main.py" (to run the code)

@@ -12,6 +12,8 @@ class Board:
 
         self.grid = np.zeros((4, 4), dtype=int)
 
+        self.last_count = 1
+
         # First random values
         i_1 = [random.randint(0, 3), random.randint(0, 3)]
         i_2 = [random.randint(0, 3), random.randint(0, 3)]
@@ -42,6 +44,13 @@ class Board:
         for i in range(4):
             for j in range(4):
                 if self.grid[i][j] == 0:
+                    return True
+        return False
+
+    def winning_tile(self):
+        for i in range(4):
+            for j in range (4):
+                if self.grid[i][j]==2048 :
                     return True
         return False
 
@@ -145,7 +154,7 @@ class Board:
         while self.grid[i][j] != 0:
             i, j = random.randint(0, 3), random.randint(0, 3)
 
-        self.grid[i][j] = random.choices([2, 4], [0.9, 0.1])[0]
+        self.grid[i][j] = random.choices([2, 4], [0.5, 0.5])[0]
 
     def move(self, move):
         """
@@ -223,6 +232,7 @@ class Board:
 
         move_score = {move: 0 for move in self.moves}
         move_count = {move: 0 for move in self.moves}
+        
 
         for _ in range(1000):
             possible_move = random.choice(available_moves)
@@ -246,6 +256,18 @@ class Board:
                 depth += 1
 
         move_count = {k: v if v != 0 else 1 for k, v in move_count.items()}
+        # Use UCB
+        # result = {move: move_score[move] / move_count[move] + np.sqrt(2*np.log(self.last_count)/move_count[move]) for move in self.moves}
+        # Use mean
         result = {move: move_score[move] / move_count[move] for move in self.moves}
         chosen_move = max(result, key=result.get)
+        print({move : [move_score[move] / move_count[move],move_count[move]] for move in self.moves})
+        self.last_count = move_count[chosen_move]
+        
+
         return chosen_move
+
+    def board_id(self):
+        list_numbers = np.concatenate((self.grid[0],self.grid[1],self.grid[2],self.grid[3]))
+        idx = "_".join(list_numbers.astype(str))
+        return idx
